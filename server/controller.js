@@ -42,29 +42,48 @@ module.exports = {
 
     rateFriends: (req, res) => {
         let name = req.params.name
-        let rating = req.params.rating
+        let rating = req.body.rating
 
-        let index = friendsRatedArr.findIndex( friend => friend[name] === name)
-
-        if (friendsRatedArr[index]){
-            friendsRatedArr[index].rating = rating
-
-            res.status(200).send(`Friend: ${name} is now rated ${rating}`)
-        } else {
-            res.status(200).send('Friend does not exist.')
+        for( i = 0; i < friendsRatedArr.length; i++){
+            if (name === friendsRatedArr[i].name){
+                friendsRatedArr[i].rating = rating
+                res.status(200).send(`Friend: ${name} is now rated: ${rating}.`)
+            } 
+            
         }
-
+        res.status(200).send('Friend does not exist.')
     },
 
     deleteFriend: (req, res) => {
-        let name = req.body.name
+        let name = req.params.name
 
-        let index = friendsRatedArr.findIndex( friend => friend[name] === name)
-
-        friendsRatedArr.splice(index,1)
-
-
-        res.status(200).send(`${name} has been deleted from your list of friends.`)
+        for( i = 0; i < friendsRatedArr.length; i++){
+            
+            // res.status(200).send(friendsRatedArr[1]['name'])
+            
+            if (name === friendsRatedArr[i]['name']){
+                
+                friendsRatedArr.splice(i, 1)
+                
+                res.status(200).send(`${name} has been deleted from your list of friends.`)
+                
+            }
+        }   
+        res.status(200).send(`${name} was not found on your list of friends.`)
     }
+    
+} 
 
-}
+// let friendsRemainingArr = []
+// let friendsRemaining = friendsRemainingArr.join(',')
+
+// for(j = 0; j < friendsRatedArr; j++){
+//     friendsRemainingArr.push(friendsRatedArr[j][name])
+    
+    
+    // res.status(200).send(`Your remaining friends are:${friendsRemaining}`)
+// } 
+// res.status(200).send('Friend does not exist.')
+
+
+

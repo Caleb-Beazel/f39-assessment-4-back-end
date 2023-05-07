@@ -21,30 +21,16 @@ const ratingHandler = (e) => {
     let name = document.getElementById('name').value
     let newRating = document.getElementById('rating').value
     
-    console.log(name)
-    console.log(newRating)
-    
-    // let friendObj = {
-    //     name: name,
-    //     rating: newRating
     friendsRated(name, newRating)
-
 }
 const deleteHandler = (e) => {
     e.preventDefault()
 
     let name = document.getElementById('name2').value
-    let nameObj= {
-        name: name
-    }
-    console.log(name)
-
-
-    deleteFriend(nameObj)
+    
+    deleteFriend(name)
 
 }
-
-
 
 
 const getCompliment = () => {
@@ -74,8 +60,11 @@ const createFortune = (body) => {
 const friendsRated = (name, rating) => {
     axios.put(`http://localhost:4000/api/friends/${name}`, {rating})
     .then(res => {
-        alert(res.data)
+        // alert(res.data)
         console.log(res.data)
+    })
+    .catch(err => {
+        console.log(err)
     })
 }
 
@@ -83,7 +72,9 @@ const deleteFriend = (name) => {
     axios.delete(`http://localhost:4000/api/friends/${name}`)
     .then(res => {
         console.log(res.data)
-
+    })
+    .catch(err => {
+        console.log(err)
     })
 }
 
@@ -93,4 +84,3 @@ fortuneBtn.addEventListener('click', getFortune)
 form1.addEventListener('submit', fortuneHandler)
 form2.addEventListener('submit', ratingHandler)
 form3.addEventListener('submit', deleteHandler)
-
